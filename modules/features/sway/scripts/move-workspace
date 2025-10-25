@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+OUTPUT_INDEX="$(swaymsg -t get_outputs | jq 'map(.focused)|to_entries|.[]|select(.value)|.key+1')"
+WORKSPACE="$1"
+
+swaymsg move container to workspace "$OUTPUT_INDEX:$WORKSPACE"

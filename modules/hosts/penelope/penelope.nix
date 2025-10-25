@@ -1,0 +1,68 @@
+{ inputs, withSystem, moduleWithSystem, ... }:
+
+let system = "x86_64-linux"; in {
+  flake.modules.nixos.penelope = {
+    imports = [ ./_hardware-configuration.nix ];
+
+    networking.hostName = "penelope";
+    time.timeZone = "America/Los_Angeles";
+
+    system.stateVersion = "25.05";
+
+    my = {
+      disko.devices = {
+        main = "/dev/disk/by-id/nvme-Samsung_SSD_990_EVO_Plus_4TB_S7U8NJ0Y707556N";
+      };
+      stylix = {
+        wallpaper = ./wallpaper.jpg;
+        theme = ./theme.yml;
+      };
+    };
+  };
+
+  flake.modules.homeManager.penelope = moduleWithSystem (
+    perSystem @ { pkgs }:
+    {
+      my.sway = {
+        modifier = "Mod4";
+        terminal = "alacritty";
+        menu = "rofi -show drun";
+        output = {
+          "DP-4" = {
+            resolution = "1920x1080@119.879Hz";
+            position = "0,0";
+          };
+          "DP-6" = {
+            resolution = "1920x1080@165.003Hz";
+            position = "1920,0";
+          };
+        };
+      };
+    }
+  );
+
+  flake.nixosConfigurations.penelope = inputs.nixpkgs.lib.nixosSystem {
+    system = system;
+    modules = with inputs.self.modules.nixos; [
+      disko
+      penelope
+      aurelia
+      bootloader
+      nvidia
+      pipewire
+      ssh
+      stylix
+    ];
+  };
+
+  flake.homeConfigurations."aurelia@penelope" = withSystem system (
+    perSystem @ { pkgs, ... }:
+    inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = pkgs;
+      modules = with inputs.self.modules.homeManager; [
+        penelope
+        aurelia
+      ];
+    }
+  );
+}
