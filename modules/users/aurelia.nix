@@ -33,6 +33,7 @@ in{
 
       home.packages = with pkgs; [
         tmux
+        bat
       ];
 
       home.username = username;
