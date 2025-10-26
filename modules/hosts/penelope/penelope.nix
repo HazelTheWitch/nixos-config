@@ -1,32 +1,39 @@
 { inputs, withSystem, moduleWithSystem, ... }:
 
 let system = "x86_64-linux"; in {
-  flake.modules.nixos.penelope = {
-    imports = [ ./_hardware-configuration.nix ];
+  flake.modules.nixos.penelope = moduleWithSystem (
+      perSystem @ { pkgs, ... }:
+      {
+        imports = [ ./_hardware-configuration.nix ];
 
-    networking.hostName = "penelope";
-    time.timeZone = "America/Los_Angeles";
+        environment.systemPackages = with pkgs; [
+          firefox
+        ];
 
-    system.stateVersion = "25.05";
-    nix.settings.experimental-features = [ "flakes" "nix-command" ];
+        networking.hostName = "penelope";
+        time.timeZone = "America/Los_Angeles";
 
-    home-manager.users.aurelia = {
-      imports = with inputs.self.modules.homeManager; [
-        penelope
-        aurelia
-      ];
-    };
+        system.stateVersion = "25.05";
+        nix.settings.experimental-features = [ "flakes" "nix-command" ];
 
-    my = {
-      disko.devices = {
-        main = "/dev/disk/by-id/nvme-Samsung_SSD_990_EVO_Plus_4TB_S7U8NJ0Y707556N";
+        home-manager.users.aurelia = {
+          imports = with inputs.self.modules.homeManager; [
+            penelope
+            aurelia
+          ];
       };
-      stylix = {
-        wallpaper = ./wallpaper.jpg;
-        theme = ./theme.yml;
+
+      my = {
+        disko.devices = {
+          main = "/dev/disk/by-id/nvme-Samsung_SSD_990_EVO_Plus_4TB_S7U8NJ0Y707556N";
+        };
+        stylix = {
+          wallpaper = ./wallpaper.jpg;
+          theme = ./theme.yml;
+        };
       };
-    };
-  };
+    }
+  );
 
   flake.modules.homeManager.penelope = moduleWithSystem (
     perSystem @ { pkgs }:

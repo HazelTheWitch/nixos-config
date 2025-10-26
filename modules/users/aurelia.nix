@@ -29,6 +29,7 @@ in{
         neovim
         rofi
         waybar
+        vesktop
       ];
 
       home.packages = with pkgs; [
