@@ -34,7 +34,7 @@ in{
     programs.git = {
       enable = true;
       userName = "Hazel Rella";
-      UserEmail = "hazelrella11@gmail.com";
+      userEmail = "hazelrella11@gmail.com";
     };
 
     # Guuji Custom Theme

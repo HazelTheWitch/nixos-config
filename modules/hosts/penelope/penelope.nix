@@ -8,6 +8,14 @@ let system = "x86_64-linux"; in {
     time.timeZone = "America/Los_Angeles";
 
     system.stateVersion = "25.05";
+    nix.settings.experimental-features = [ "flakes" "nix-command" ];
+
+    home-manager.users.aurelia = {
+      imports = with inputs.self.modules.homeManager; [
+        penelope
+        aurelia
+      ];
+    };
 
     my = {
       disko.devices = {
@@ -44,6 +52,7 @@ let system = "x86_64-linux"; in {
   flake.nixosConfigurations.penelope = inputs.nixpkgs.lib.nixosSystem {
     system = system;
     modules = with inputs.self.modules.nixos; [
+      inputs.home-manager.nixosModules.home-manager
       disko
       penelope
       aurelia
@@ -54,15 +63,4 @@ let system = "x86_64-linux"; in {
       stylix
     ];
   };
-
-  flake.homeConfigurations."aurelia@penelope" = withSystem system (
-    perSystem @ { pkgs, ... }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgs;
-      modules = with inputs.self.modules.homeManager; [
-        penelope
-        aurelia
-      ];
-    }
-  );
 }

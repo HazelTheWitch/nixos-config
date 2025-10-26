@@ -2,14 +2,14 @@
 
 {
   flake.modules.homeManager.rofi = moduleWithSystem (
-    perSystem @ { config, ... }:
+    perSystem @ { lib, ... }:
     {
-      program.rofi = {
+      programs.rofi = {
         modes = [
           "drun"
         ];
         theme = let
-          inherit (config.lib.formats.rasi) mkLiteral;
+          inherit (lib.formats.rasi) mkLiteral;
         in {
           entry.placeholder = "";
           "*" = {
