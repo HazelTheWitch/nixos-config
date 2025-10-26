@@ -11,6 +11,8 @@ in{
         zsh
       ];
 
+      programs.nix-ld.enable = true;
+
       users.users.${username} = {
         isNormalUser = true;
         shell = pkgs.zsh;
@@ -35,6 +37,8 @@ in{
       home.packages = with pkgs; [
         tmux
         bat
+        uv
+        fastfetch
       ];
 
       home.username = username;
