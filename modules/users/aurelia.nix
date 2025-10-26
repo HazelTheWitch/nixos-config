@@ -19,40 +19,48 @@ in{
     }
   );
 
-  flake.modules.homeManager.${username} = {
-    imports = with inputs.self.modules.homeManager; [
-      zsh
-      sway
-      alacritty
-      neovim
-      rofi
-    ];
+  flake.modules.homeManager.${username} = moduleWithSystem (
+    perSystem @ { pkgs, ... }:
+    {
+      imports = with inputs.self.modules.homeManager; [
+        zsh
+        sway
+        alacritty
+        neovim
+        rofi
+        waybar
+      ];
 
-    home.username = username;
+      home.packages = with pkgs; [
+        tmux
+      ];
 
-    # Git Configuration
-    programs.git = {
-      enable = true;
-      userName = "Hazel Rella";
-      userEmail = "hazelrella11@gmail.com";
-    };
+      home.username = username;
 
-    # Guuji Custom Theme
-    programs.zsh.oh-my-zsh.theme = "guuji";
-    home.file.guuji = {
-      text = ''
-        # guuji.zsh-theme
+      # Git Configuration
+      programs.git = {
+        enable = true;
+        userName = "Hazel Rella";
+        userEmail = "hazelrella11@gmail.com";
+      };
 
-        PROMPT='$FG[211]┌[ $reset_color%B$FG[white]%n$reset_color$FG[211]@$reset_color%B$FG[white]%M$reset_color$FG[211] ]-< $reset_color$FG[white]%~$reset_color$FG[211] >$(git_prompt_info)
-        └> % %{$reset_color%}'
+      # Guuji Custom Theme
+      programs.zsh.oh-my-zsh.theme = "guuji";
+      home.file.guuji = {
+        text = ''
+          # guuji.zsh-theme
 
-        ZSH_THEME_GIT_PROMPT_PREFIX="-( $reset_color$FG[246]git://$reset_color%B$FG[white]"
-        ZSH_THEME_GIT_PROMPT_SUFFIX=" $reset_color$FG[211])"
-        ZSH_THEME_GIT_PROMPT_DIRTY=" $FG[211]x$reset_color"
-      '';
-      target = ".oh-my-zsh/custom/themes/guuji.zsh-theme";
-    };
+          PROMPT='$FG[211]┌[ $reset_color%B$FG[white]%n$reset_color$FG[211]@$reset_color%B$FG[white]%M$reset_color$FG[211] ]-< $reset_color$FG[white]%~$reset_color$FG[211] >$(git_prompt_info)
+          └> % %{$reset_color%}'
 
-    home.stateVersion = "25.05";
-  };
+          ZSH_THEME_GIT_PROMPT_PREFIX="-( $reset_color$FG[246]git://$reset_color%B$FG[white]"
+          ZSH_THEME_GIT_PROMPT_SUFFIX=" $reset_color$FG[211])"
+          ZSH_THEME_GIT_PROMPT_DIRTY=" $FG[211]x$reset_color"
+        '';
+        target = ".oh-my-zsh/custom/themes/guuji.zsh-theme";
+      };
+
+      home.stateVersion = "25.05";
+    }
+  );
 }

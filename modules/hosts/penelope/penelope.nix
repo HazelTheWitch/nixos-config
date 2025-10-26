@@ -40,7 +40,7 @@ let system = "x86_64-linux"; in {
             resolution = "1920x1080@119.879Hz";
             position = "0,0";
           };
-          "DP-6" = {
+          "DP-5" = {
             resolution = "1920x1080@165.003Hz";
             position = "1920,0";
           };

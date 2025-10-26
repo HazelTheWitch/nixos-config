@@ -14,6 +14,8 @@
 
       home.packages = with pkgs; [
         neovim
+        nodejs
+        ripgrep
       ];
     }
   );
