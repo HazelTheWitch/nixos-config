@@ -17,6 +17,9 @@
       config = {
         home.packages = with pkgs; [
           jq
+          grim
+          slurp
+          wl-clipboard
         ];
 
         xdg.configFile.sway-scripts = {
