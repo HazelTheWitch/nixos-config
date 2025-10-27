@@ -13,7 +13,7 @@ let system = "x86_64-linux"; in {
         networking.hostName = "luna";
         time.timeZone = "America/Los_Angeles";
 
-        networking.networkManager.enable = true;
+        networking.networkmanager.enable = true;
 
 	hardware.graphics.enable = true;
 
