@@ -8,6 +8,7 @@ let system = "x86_64-linux"; in {
 
         environment.systemPackages = with pkgs; [
           firefox
+          blender
         ];
 
         networking.hostName = "penelope";
