@@ -15,6 +15,7 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs = inputs @ { flake-parts, import-tree, home-manager, disko, ... }: flake-parts.lib.mkFlake { inherit inputs; } (top: {
