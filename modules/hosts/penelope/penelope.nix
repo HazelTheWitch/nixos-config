@@ -12,8 +12,9 @@ let system = "x86_64-linux"; in {
           obsidian
           slack
           zoom
-          direnv
         ];
+
+        programs.direnv.enable = true;
 
         networking.hostName = "penelope";
         time.timeZone = "America/Los_Angeles";
