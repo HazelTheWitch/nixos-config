@@ -18,7 +18,7 @@
     niri.url = "github:sodiboo/niri-flake";
   };
 
-  outputs = inputs @ { flake-parts, import-tree, home-manager, disko, ... }: flake-parts.lib.mkFlake { inherit inputs; } (top: {
+  outputs = inputs @ { flake-parts, self, import-tree, home-manager, disko, ... }: flake-parts.lib.mkFlake { inherit inputs; } (top: {
     imports = [
       home-manager.flakeModules.home-manager
       flake-parts.flakeModules.modules
@@ -27,5 +27,16 @@
     ];
 
     systems = [ "x86_64-linux" ];
+
+    perSystem = {
+      config,
+      system,
+      ...
+    }: {
+      _module.args.pkgs = import self.inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    };
   });
 }

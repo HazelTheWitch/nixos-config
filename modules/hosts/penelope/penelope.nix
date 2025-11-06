@@ -9,6 +9,9 @@ let system = "x86_64-linux"; in {
         environment.systemPackages = with pkgs; [
           firefox
           blender
+          obsidian
+          slack
+          zoom
         ];
 
         networking.hostName = "penelope";
@@ -70,6 +73,7 @@ let system = "x86_64-linux"; in {
       ssh
       stylix
       steam
+      vesktop
     ];
   };
 }

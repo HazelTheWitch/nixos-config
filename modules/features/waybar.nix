@@ -37,6 +37,7 @@
             format = "{:%Y-%m-%d %I:%M %p}";
             tooltip = false;
           };
+          memory.format = "memory {}%";
           cpu = {
             format = "cpu {}%";
             tooltip = false;
