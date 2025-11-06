@@ -12,6 +12,7 @@ let system = "x86_64-linux"; in {
           obsidian
           slack
           zoom
+          direnv
         ];
 
         networking.hostName = "penelope";
