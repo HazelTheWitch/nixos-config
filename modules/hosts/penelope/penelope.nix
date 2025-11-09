@@ -76,6 +76,7 @@ let system = "x86_64-linux"; in {
       stylix
       steam
       vesktop
+      scream
     ];
   };
 }
