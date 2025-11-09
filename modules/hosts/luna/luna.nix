@@ -15,7 +15,7 @@ let system = "x86_64-linux"; in {
 
         networking.networkmanager.enable = true;
 
-	hardware.graphics.enable = true;
+	    hardware.graphics.enable = true;
 
         system.stateVersion = "25.05";
         nix.settings.experimental-features = [ "flakes" "nix-command" ];
@@ -39,17 +39,6 @@ let system = "x86_64-linux"; in {
     }
   );
 
-  flake.modules.homeManager.luna = moduleWithSystem (
-    perSystem @ { pkgs }:
-    {
-      my.sway = {
-        modifier = "Mod4";
-        terminal = "alacritty";
-        menu = "rofi -show drun";
-        output = {};
-      };
-    }
-  );
 
   flake.nixosConfigurations.luna = inputs.nixpkgs.lib.nixosSystem {
     system = system;
@@ -61,6 +50,7 @@ let system = "x86_64-linux"; in {
       bootloader
       pipewire
       ssh
+      niri
       stylix
     ];
   };
